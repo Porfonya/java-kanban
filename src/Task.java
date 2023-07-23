@@ -1,19 +1,28 @@
-import java.util.ArrayList;
-
 public class Task {
     private int id;
 
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
 
     Status status;
+    TypeTask typeTask;
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
+        this.typeTask = TypeTask.TASK;
 
     }
+
+    public Task(int id, String name, String description, Status status, TypeTask typeTask) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.typeTask = typeTask;
+    }
+
 
     public int getId() {
         return id;
@@ -23,29 +32,24 @@ public class Task {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                '}';
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getClass().getName());
+        stringBuilder.append("{id = ");
+        stringBuilder.append(id);
+        stringBuilder.append(", name = '");
+        stringBuilder.append(name);
+        stringBuilder.append("', description = '");
+        stringBuilder.append(description);
+        stringBuilder.append("', status = '");
+        stringBuilder.append(status);
+        stringBuilder.append("', typeTask = '");
+        stringBuilder.append(typeTask);
+        stringBuilder.append("'}");
+
+        return stringBuilder.toString();
     }
 }
