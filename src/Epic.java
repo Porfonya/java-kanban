@@ -3,7 +3,7 @@ public class Epic extends Task {
 
     public Epic(String name, String description) {
         super(name, description);
-        this.typeTask = TypeTask.EPIC;
+        this.taskType = TaskType.EPIC;
 
     }
 }

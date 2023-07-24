@@ -4,23 +4,23 @@ public class Task {
     private final String name;
     private final String description;
 
-    Status status;
-    TypeTask typeTask;
+    public Status status;
+    public TaskType taskType;
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
-        this.typeTask = TypeTask.TASK;
+        this.taskType = TaskType.TASK;
 
     }
 
-    public Task(int id, String name, String description, Status status, TypeTask typeTask) {
+    public Task(int id, String name, String description, Status status, TaskType taskType) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;
-        this.typeTask = typeTask;
+        this.taskType = taskType;
     }
 
 
@@ -32,6 +32,21 @@ public class Task {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public TaskType getTaskType() {
+        return taskType;
+    }
 
     @Override
     public String toString() {
@@ -47,7 +62,7 @@ public class Task {
         stringBuilder.append("', status = '");
         stringBuilder.append(status);
         stringBuilder.append("', typeTask = '");
-        stringBuilder.append(typeTask);
+        stringBuilder.append(taskType);
         stringBuilder.append("'}");
 
         return stringBuilder.toString();

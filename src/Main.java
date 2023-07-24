@@ -9,7 +9,7 @@ public class Main {
         Task task1 = new Task("Работа", "Заработать 1000 рублей");
         Task task2 = new Task("Испечь пироги", "Приготовить пироги из капусты");
 
-        Task newTask2 = new Task(2, "Обучение", "Сдать ТЗ3", Status.IN_PROGRESS, TypeTask.TASK);
+        Task newTask2 = new Task(2, "Обучение", "Сдать ТЗ3", Status.IN_PROGRESS, TaskType.TASK);
 
         Epic epic1 = new Epic("Переезд", "Перевезти все вещи в новую квартиру");
         Epic epic2 = new Epic("Подъем", "Поднять все вещи");
@@ -18,7 +18,7 @@ public class Main {
         Subtask subtask2 = new Subtask("Чемодан", "вынести в коридор", 3);
         Subtask subtask3 = new Subtask("Лифт", "вызвать лифт", 4);
 
-        Subtask newSubtask3 = new Subtask(7, "Лестница", "Лифт не работает. Пойти по лестнице", Status.DONE, TypeTask.SUBTASK, 4);
+        Subtask newSubtask3 = new Subtask(7, "Лестница", "Лифт не работает. Пойти по лестнице", Status.DONE, TaskType.SUBTASK, 4);
 
         System.out.println("Добавление  всех задач, эпиков, и подзадач:");
         manager.addTask(task1);
