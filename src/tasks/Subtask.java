@@ -1,7 +1,11 @@
+package tasks;
+
+import enumtype.Status;
+import enumtype.TaskType;
 
 public class Subtask extends Task {
 
-    private final int epicId;
+    protected final int epicId;
 
     public Subtask(String name, String description, int epicId) {
         super(name, description);

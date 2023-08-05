@@ -1,3 +1,6 @@
+package tasks;
+
+import enumtype.TaskType;
 
 public class Epic extends Task {
 

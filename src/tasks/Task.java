@@ -1,3 +1,8 @@
+package tasks;
+
+import enumtype.Status;
+import enumtype.TaskType;
+
 public class Task {
     private int id;
 
