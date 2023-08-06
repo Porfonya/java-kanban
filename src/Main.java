@@ -62,37 +62,29 @@ public class Main {
         System.out.println(memoryTaskManager.getEpic(3));
 
         System.out.println("\n");
-        System.out.println("Получение списка всех подзадач определённого эпика \n ");
+
         int epicId = 3;
-        if (memoryTaskManager.getEpics().containsKey(epicId)) {
-            if (memoryTaskManager.getListByEpic(epicId).size() != 0) {
-                System.out.println(memoryTaskManager.getListByEpic(epicId));
-            } else {
-                System.out.println("У эпика нет подзадач");
-            }
-        } else {
-            System.out.println("Такого эпика не существует");
-        }
+        System.out.println("Получение списка всех подзадач определённого эпика \n " + memoryTaskManager.getListByEpic(epicId));
 
         System.out.println("\n");
         System.out.println("Обновление. Новая версия объекта с верным идентификатором передаётся в виде параметра.\n");
         memoryTaskManager.updateTask(new Task(2, "Обучение", "Обновить ТЗ-4", Status.IN_PROGRESS,
                 TaskType.TASK));
         System.out.println("Обновленная задача " + memoryTaskManager.getTask(2));
-        memoryTaskManager.updateSubtask(new Subtask(7, "Лестница", "Лифт не работает. Пойти по лестнице",
+        memoryTaskManager.updateSubtask(new Subtask(13, "Лестница", "Лифт не работает. Пойти по лестнице",
                 Status.DONE, TaskType.SUBTASK, 4));
-        System.out.println("Обновленная подзадача " + memoryTaskManager.getSubtask(7));
+        System.out.println("Обновленная подзадача " + memoryTaskManager.getSubtask(13));
 
         System.out.println("\n");
         System.out.println("Статус эпика\n");
-        memoryTaskManager.getEpicStatus(3);
-        System.out.println(memoryTaskManager.getEpicStatus(3));
+        System.out.println(memoryTaskManager.getEpicStatus(4));
 
         System.out.println("История");
         for (Task task : InMemoryTaskManager.historyManager.getHistory()) {
             System.out.println(" History " + task);
         }
-
+        System.out.println("Id subtask for Epic");
+        System.out.println(memoryTaskManager.getEpic(4).getSubtasksIdForEpic());
 
         System.out.println("\n");
         System.out.println("Удаление по идентификатору.\n");
@@ -101,7 +93,7 @@ public class Main {
         memoryTaskManager.removeByIdEpic(3);
 
 
-        System.out.println("****Получение списка всех задач, эпиков, и подзадач: \n ");
+        System.out.println("Получение списка всех задач, эпиков, и подзадач: \n ");
         for (Task value : memoryTaskManager.getTasks().values()) {
             System.out.println(value);
         }
@@ -116,7 +108,7 @@ public class Main {
 
         System.out.println("\n");
         System.out.println("Удаление всех задач.\n");
-        //   manager.clearAllEpic();
+        memoryTaskManager.clearAllEpic();
 
     }
 }
