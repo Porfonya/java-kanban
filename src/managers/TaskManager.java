@@ -1,9 +1,7 @@
 package managers;
 
 import enumtype.Status;
-import tasks.Epic;
-import tasks.Subtask;
-import tasks.Task;
+import tasks.*;
 
 import java.util.*;
 
