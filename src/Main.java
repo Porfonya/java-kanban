@@ -46,22 +46,19 @@ public class Main {
         }
         System.out.println("Id subtask for Epic");
         System.out.println(memoryTaskManager.getEpic(3).getSubtasksIdForEpic());
-
+        System.out.println("------------------");
         System.out.println("\n");
         System.out.println("Удаление по идентификатору.\n");
         memoryTaskManager.removeByIdTask(1);
-
         System.out.println("История - 2");
         for (Task task : memoryTaskManager.getHistory()) {
-            System.out.println(" History " + task);
+            System.out.println(" History "  + task);
         }
-        memoryTaskManager.removeByIdSubtask(6);
+        System.out.println("------------------");
+        memoryTaskManager.removeByIdEpic(3);
         System.out.println("История - 3");
         for (Task task : memoryTaskManager.getHistory()) {
             System.out.println(" History "  + task);
         }
-
-
-
     }
 }

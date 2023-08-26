@@ -5,7 +5,7 @@ import tasks.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    public Map<Integer, Node<Task>> locationHistoryTask;
+    private final Map<Integer, Node<Task>> locationHistoryTask;
     private Node<Task> head;
     private Node<Task> tail;
 
@@ -25,8 +25,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
 
     }
-
-
     private void linkLast(Task task) {
 
         if (locationHistoryTask.containsKey(task.getId())) {
@@ -64,11 +62,8 @@ public class InMemoryHistoryManager implements HistoryManager {
             if (node.prev != null) {
                 node.prev.next = node.next;
             }
-
         }
-
     }
-
 
     @Override
     public void add(Task task) {

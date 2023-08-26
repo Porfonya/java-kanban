@@ -10,7 +10,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Epic> epics = new HashMap<>();
     private int elementId = 1;
 
-    public static HistoryManager historyManager = Managers.getDefaultHistory();
+    private static final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public Map<Integer, Task> getTasks() {
@@ -105,7 +105,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addSubtask(Subtask subtask) {
-
         if (epics.containsKey(subtask.getEpicId())) {
             if (subtask.getId() == 0) {
                 subtask.setId(elementId);
@@ -124,7 +123,6 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void removeByIdTask(int id) {
         //Удаление по идентификатору.
-
         if (tasks.containsKey(id)) {
             tasks.remove(id);
             System.out.println("Задача удалена");
@@ -230,5 +228,4 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getHistory(){
         return historyManager.getHistory();
     }
-
 }
