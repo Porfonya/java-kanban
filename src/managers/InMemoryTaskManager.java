@@ -3,7 +3,7 @@ import enumtype.Status;
 import tasks.*;
 import java.util.*;
 
-public class InMemoryTaskManager implements TaskManager {
+public class InMemoryTaskManager implements TaskManager  {
 
     private final Map<Integer, Task> tasks = new HashMap<>();
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
@@ -125,6 +125,7 @@ public class InMemoryTaskManager implements TaskManager {
         //Удаление по идентификатору.
         if (tasks.containsKey(id)) {
             tasks.remove(id);
+            historyManager.remove(id);
             System.out.println("Задача удалена");
         } else {
             System.out.println("Такой задачи нет");
@@ -136,6 +137,7 @@ public class InMemoryTaskManager implements TaskManager {
         //Удаление по идентификатору.
         if (subtasks.containsKey(id)) {
             subtasks.remove(id);
+            historyManager.remove(id);
             System.out.println("Подзадача удалена");
         } else {
             System.out.println("Такой подзадачи нет");
@@ -147,9 +149,11 @@ public class InMemoryTaskManager implements TaskManager {
         //Удаление по идентификатору.
         if (epics.containsKey(id)) {
             Epic epic = epics.remove(id);
+            historyManager.remove(id);
             if (epic != null) {
                 for (Integer subtaskId : epic.getSubtasksIdForEpic()) {
                     subtasks.remove(subtaskId);
+                    historyManager.remove(subtaskId);
                 }
             }
         } else {
