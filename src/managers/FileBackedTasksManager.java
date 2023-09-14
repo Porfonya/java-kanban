@@ -38,20 +38,23 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public Task getTask(int taskId) {
+        Task task = super.getTask(taskId);
         save();
-        return super.getTask(taskId);
+        return task;
     }
 
     @Override
     public Epic getEpic(int epicId) {
+        Epic epic = super.getEpic(epicId);
         save();
-        return super.getEpic(epicId);
+        return epic;
     }
 
     @Override
     public Subtask getSubtask(int subtaskId) {
+        Subtask subtask = super.getSubtask(subtaskId);
         save();
-        return super.getSubtask(subtaskId);
+        return subtask;
     }
 
     @Override
@@ -110,21 +113,22 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public List<Subtask> getListByEpic(int epicId) {
+        List<Subtask> subtasks = super.getListByEpic(epicId);
         save();
-        return super.getListByEpic(epicId);
+        return subtasks;
 
     }
 
     @Override
     public void updateTask(Task task) {
-        save();
         super.updateTask(task);
+        save();
     }
 
     @Override
     public void updateSubtask(Subtask subtask) {
-        save();
         super.updateSubtask(subtask);
+        save();
     }
 
     @Override
@@ -135,34 +139,33 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     @Override
     public Status getEpicStatus(int epicId) {
+        Status status = super.getEpicStatus(epicId);
         save();
-        return super.getEpicStatus(epicId);
+        return status;
     }
 
     @Override
     public List<Task> getHistory() {
-        save();
         return super.getHistory();
     }
 
 
     String toString(Task task) {
         if (task instanceof Subtask) {
-            return String.format("%d, %-7s, %-25s, %-10s, %-25s, %-5s \n", task.getId(), task.getTaskType(), task.getName(), task.getStatus(),
+            return String.format("%d,%s,%s,%s,%s,%s\n", task.getId(), task.getTaskType(), task.getName(), task.getStatus(),
                     task.getDescription(), ((Subtask) task).getEpicId());
         } else {
-            return String.format("%d, %-7s, %-25s, %-10s, %-25s \n", task.getId(), task.getTaskType(), task.getName(), task.getStatus(),
+            return String.format("%d,%s,%s,%s,%s\n", task.getId(), task.getTaskType(), task.getName(), task.getStatus(),
                     task.getDescription());
         }
 
     }
 
-
     public void save() {
 
         try (
                 Writer fileWriter = new FileWriter(file)) {
-            fileWriter.write("id, type,       name,               status,       description,               epic");
+            fileWriter.write("id,type,name,status,description,epic");
             fileWriter.write('\n');
 
             for (Task task : getTasks().values()) {
@@ -177,9 +180,15 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 fileWriter.write(toString(subtask));
             }
             fileWriter.write("\n");
-            for (Task task : super.getHistory()) {
-                fileWriter.write(task.getId() + ",");
+
+            StringBuilder stringBuilder = new StringBuilder();
+            List<Task> taskHistory = super.getHistory();
+            for (Task taskHis : taskHistory) {
+                stringBuilder.append(taskHis.getId());
+                stringBuilder.append((","));
             }
+            fileWriter.write(stringBuilder.toString());
+
 
         } catch (IOException exp) {
             throw new ManagerSaveException("Произошла ошибка при сохранении в файл");
@@ -191,10 +200,10 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         if (value != null) {
             String[] valueOuts = value.split(",");
             for (String valueOut : valueOuts) {
-                historyTaskId .add(Integer.valueOf(valueOut));
+                historyTaskId.add(Integer.valueOf(valueOut));
             }
         }
-        return historyTaskId ;
+        return historyTaskId;
     }
 
     public static FileBackedTasksManager loadFromFile(File file) {
@@ -228,18 +237,18 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         Task task;
 
         String[] valueOut = value.split(",");
-        int id = Integer.parseInt(valueOut[0].trim());
-        TaskType type = TaskType.valueOf(valueOut[1].trim());
-        String name = valueOut[2].trim();
+        int id = Integer.parseInt(valueOut[0]);
+        TaskType type = TaskType.valueOf(valueOut[1]);
+        String name = valueOut[2];
 
-        Status status = Status.valueOf(valueOut[3].trim());
-        String description = valueOut[4].trim();
+        Status status = Status.valueOf(valueOut[3]);
+        String description = valueOut[4];
         if (type.equals(TaskType.SUBTASK)) {
-            int epic = Integer.parseInt(valueOut[5].trim());
+            int epic = Integer.parseInt(valueOut[5]);
             task = new Subtask(id, name, description, status, type, epic);
-        } else if (type.equals(TaskType.EPIC)){
+        } else if (type.equals(TaskType.EPIC)) {
             task = new Epic(id, name, description, status, type);
-        } else{
+        } else {
             task = new Task(id, name, description, status, type);
         }
         task.setId(id);
@@ -255,7 +264,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         File file = new File("./resources", "FileBackupTasks.csv");
 
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
-        //  fileBackedTasksManager.fromString("Переезд Новая квартира");
         fileBackedTasksManager.addTask(new Task("Работа", "Заработать 1000 рублей"));
         fileBackedTasksManager.addTask(new Task("Испечь пироги", "Приготовить пироги из капусты"));
         fileBackedTasksManager.addEpic(new Epic("Подъем", "Поднять все вещи"));
@@ -277,8 +285,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         fileBackedTasksManager.getTask(1);
 
         System.out.println(fileBackedTasksManager.getSubtask(3));
-
-
 
     }
 }
