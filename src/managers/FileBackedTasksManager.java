@@ -144,12 +144,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         return status;
     }
 
-    @Override
-    public List<Task> getHistory() {
-        return super.getHistory();
-    }
-
-
     String toString(Task task) {
         if (task instanceof Subtask) {
             return String.format("%d,%s,%s,%s,%s,%s\n", task.getId(), task.getTaskType(), task.getName(), task.getStatus(),
@@ -214,7 +208,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             br.readLine();
             while (br.ready()) {
                 String line = br.readLine();
-                ;
                 if (line.isEmpty()) {
                     break;
                 }
