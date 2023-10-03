@@ -2,6 +2,7 @@ package tasks;
 
 import enumtype.Status;
 import enumtype.TaskType;
+import java.time.LocalDateTime;
 
 public class Task {
     private int id;
@@ -11,6 +12,8 @@ public class Task {
 
     public Status status;
     public TaskType taskType;
+    protected long duration;
+    protected  LocalDateTime startTime;
 
     public Task(String name, String description) {
         this.name = name;
@@ -28,6 +31,16 @@ public class Task {
         this.taskType = taskType;
     }
 
+    public Task(int id, String name, String description, Status status, TaskType taskType, LocalDateTime startTime, long duration) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.taskType = taskType;
+        this.startTime = startTime;
+        this.duration = duration;
+
+    }
 
     public int getId() {
         return id;
@@ -53,12 +66,42 @@ public class Task {
         return taskType;
     }
 
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getEndTime() {
+        if (startTime != null){
+        return startTime.plusMinutes(duration);
+        }
+        else {
+            return null;
+        }
+    }
+
+    public LocalDateTime getStartTime() {
+
+       return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getClass().getName());
-        stringBuilder.append("{id = ");
+        stringBuilder.append("id = ");
         stringBuilder.append(id);
         stringBuilder.append(", name = '");
         stringBuilder.append(name);
@@ -68,7 +111,13 @@ public class Task {
         stringBuilder.append(status);
         stringBuilder.append("', typeTask = '");
         stringBuilder.append(taskType);
-        stringBuilder.append("'}");
+        stringBuilder.append("', startTime = '");
+        stringBuilder.append(startTime);
+        stringBuilder.append("', duration = '");
+        stringBuilder.append(duration);
+        stringBuilder.append("', endTime = '");
+        stringBuilder.append(getEndTime());
+
 
         return stringBuilder.toString();
     }

@@ -6,9 +6,12 @@ import exceprions.ManagerSaveException;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
-
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private final File file;
@@ -146,11 +149,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     String toString(Task task) {
         if (task instanceof Subtask) {
-            return String.format("%d,%s,%s,%s,%s,%s\n", task.getId(), task.getTaskType(), task.getName(), task.getStatus(),
-                    task.getDescription(), ((Subtask) task).getEpicId());
+            return String.format("%d,%s,%s,%s,%s,%s,%s,%s\n", task.getId(), task.getTaskType(), task.getName(),
+                    task.getStatus(),
+                    task.getDescription(), task.getStartTime(), task.getDuration(),
+                    ((Subtask) task).getEpicId());
         } else {
-            return String.format("%d,%s,%s,%s,%s\n", task.getId(), task.getTaskType(), task.getName(), task.getStatus(),
-                    task.getDescription());
+            return String.format("%d,%s,%s,%s,%s,%s,%s\n", task.getId(), task.getTaskType(), task.getName(),
+                     task.getStatus(), task.getDescription(), task.getStartTime(), task.getDuration());
         }
 
     }
@@ -159,7 +164,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
         try (
                 Writer fileWriter = new FileWriter(file)) {
-            fileWriter.write("id,type,name,status,description,epic");
+            fileWriter.write("id,type,name,status,description,duration,startTime,epic");
             fileWriter.write('\n');
 
             for (Task task : getTasks().values()) {
@@ -231,18 +236,19 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
         String[] valueOut = value.split(",");
         int id = Integer.parseInt(valueOut[0]);
-        TaskType type = TaskType.valueOf(valueOut[1]);
-        String name = valueOut[2];
-
+        String name = valueOut[1];
+        String description = valueOut[2];
         Status status = Status.valueOf(valueOut[3]);
-        String description = valueOut[4];
+        TaskType type = TaskType.valueOf(valueOut[4]);
+        LocalDateTime startTime = LocalDateTime.parse(valueOut[5],DateTimeFormatter.ofPattern("dd:MM:yyyy HH:mm"));
+        long duration = Long.parseLong(valueOut[6]);
         if (type.equals(TaskType.SUBTASK)) {
-            int epic = Integer.parseInt(valueOut[5]);
-            task = new Subtask(id, name, description, status, type, epic);
+            int epic = Integer.parseInt(valueOut[7]);
+            task = new Subtask(id, name, description, status, type, duration, startTime, epic);
         } else if (type.equals(TaskType.EPIC)) {
-            task = new Epic(id, name, description, status, type);
+            task = new Epic(id, name, description, status, type,  startTime, duration);
         } else {
-            task = new Task(id, name, description, status, type);
+            task = new Task(id, name, description, status, type, startTime,  duration);
         }
         task.setId(id);
 
@@ -257,9 +263,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         File file = new File("./resources", "FileBackupTasks.csv");
 
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
-        fileBackedTasksManager.addTask(new Task("Работа", "Заработать 1000 рублей"));
-        fileBackedTasksManager.addTask(new Task("Испечь пироги", "Приготовить пироги из капусты"));
-        fileBackedTasksManager.addEpic(new Epic("Подъем", "Поднять все вещи"));
+        Task task = new Task("Работа", "Заработать 1000 рублей");
+        task.setDuration(10);
+        task.setStartTime(LocalDateTime.now());
+        fileBackedTasksManager.addTask(task);
+
+       fileBackedTasksManager.addEpic(new Epic("Подъем", "Поднять все вещи"));
         fileBackedTasksManager.addEpic(new Epic("Переезд", "Перевезти все вещи в новую квартиру"));
         fileBackedTasksManager.addSubtask(new Subtask("Собрать вещи", "аккурасно сложить в чемодан", 3));
         fileBackedTasksManager.addSubtask(new Subtask("Чемодан", "вынести в коридор", 3));

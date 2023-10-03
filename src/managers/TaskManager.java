@@ -3,6 +3,8 @@ package managers;
 import enumtype.Status;
 import tasks.*;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public interface TaskManager {
@@ -47,5 +49,12 @@ public interface TaskManager {
 
     Status getEpicStatus(int epicId);
 
+    long getEpicDuration(int id);
+
+    LocalDateTime getEpicStartTime(int id);
+
+    TreeSet<Task> getPrioritizedTasks();
+
+    boolean isCheckIn();
 
 }
