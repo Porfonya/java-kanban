@@ -25,6 +25,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
 
     }
+
     private void linkLast(Task task) {
 
         if (locationHistoryTask.containsKey(task.getId())) {

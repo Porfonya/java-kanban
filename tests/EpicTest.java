@@ -20,8 +20,6 @@ class EpicTest {
 
     @BeforeEach
     public void beforeEach(TestInfo info) {
-       // skip @BeforeEach in mySpecialTestName test
-
         epic = new Epic("Test addNewEpic1", "Test addNewEPic description1");
         inMemoryTaskManager.addEpic(epic);
         if (info.getDisplayName().equals("shouldBeEmpty()")) {
@@ -29,7 +27,7 @@ class EpicTest {
             return;
         }
 
-        epic = new Epic(1,"Test addNewEpic1", "Test addNewEPic description1", Status.NEW, TaskType.EPIC);
+        epic = new Epic(1, "Test addNewEpic1", "Test addNewEPic description1", Status.NEW, TaskType.EPIC);
         inMemoryTaskManager.addEpic(epic);
         inMemoryTaskManager.addSubtask(new Subtask(2, "Test addNewSabtask1", "Test addNewSubtaskDescription1",
                 Status.NEW, TaskType.SUBTASK, 1));
@@ -74,14 +72,13 @@ class EpicTest {
     }
 
     @Test
-    public void subtasksWithStatusDoneAndNew()  {
+    public void subtasksWithStatusDoneAndNew() {
         Subtask subtask = inMemoryTaskManager.getListByEpic(1).get(0);
         subtask.setStatus(Status.DONE);
         for (Subtask subtaskNew : inMemoryTaskManager.getListByEpic(epic.getId())) {
             assertTrue(List.of(Status.NEW, Status.DONE).contains(subtaskNew.status));
         }
     }
-
 
 
 }

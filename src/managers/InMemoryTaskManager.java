@@ -316,7 +316,7 @@ public class InMemoryTaskManager implements TaskManager {
             if (lastTask.getEndTime() == null || prioritizedTask.getStartTime() == null){
                 continue;
             }
-            if (lastTask.getEndTime().isBefore(prioritizedTask.getStartTime())){
+            if (lastTask.getEndTime().isAfter(prioritizedTask.getStartTime())){
                 result = true;
             }
             lastTask = prioritizedTask;

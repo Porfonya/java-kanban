@@ -6,15 +6,16 @@ import exceprions.ManagerSaveException;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
+
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
-
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private final File file;
+    List<Task> taskHistory = super.getHistory();
 
     public FileBackedTasksManager(File file) {
 
@@ -155,7 +156,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     ((Subtask) task).getEpicId());
         } else {
             return String.format("%d,%s,%s,%s,%s,%s,%s\n", task.getId(), task.getTaskType(), task.getName(),
-                     task.getStatus(), task.getDescription(), task.getStartTime(), task.getDuration());
+                    task.getStatus(), task.getDescription(), task.getStartTime(), task.getDuration());
         }
 
     }
@@ -181,7 +182,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             fileWriter.write("\n");
 
             StringBuilder stringBuilder = new StringBuilder();
-            List<Task> taskHistory = super.getHistory();
+
             for (Task taskHis : taskHistory) {
                 stringBuilder.append(taskHis.getId());
                 stringBuilder.append((","));
@@ -240,15 +241,15 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         String description = valueOut[2];
         Status status = Status.valueOf(valueOut[3]);
         TaskType type = TaskType.valueOf(valueOut[4]);
-        LocalDateTime startTime = LocalDateTime.parse(valueOut[5],DateTimeFormatter.ofPattern("dd:MM:yyyy HH:mm"));
+        LocalDateTime startTime = LocalDateTime.parse(valueOut[5], DateTimeFormatter.ofPattern("dd:MM:yyyy HH:mm"));
         long duration = Long.parseLong(valueOut[6]);
         if (type.equals(TaskType.SUBTASK)) {
             int epic = Integer.parseInt(valueOut[7]);
             task = new Subtask(id, name, description, status, type, duration, startTime, epic);
         } else if (type.equals(TaskType.EPIC)) {
-            task = new Epic(id, name, description, status, type,  startTime, duration);
+            task = new Epic(id, name, description, status, type, startTime, duration);
         } else {
-            task = new Task(id, name, description, status, type, startTime,  duration);
+            task = new Task(id, name, description, status, type, startTime, duration);
         }
         task.setId(id);
 
@@ -268,7 +269,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         task.setStartTime(LocalDateTime.now());
         fileBackedTasksManager.addTask(task);
 
-       fileBackedTasksManager.addEpic(new Epic("Подъем", "Поднять все вещи"));
+        fileBackedTasksManager.addEpic(new Epic("Подъем", "Поднять все вещи"));
         fileBackedTasksManager.addEpic(new Epic("Переезд", "Перевезти все вещи в новую квартиру"));
         fileBackedTasksManager.addSubtask(new Subtask("Собрать вещи", "аккурасно сложить в чемодан", 3));
         fileBackedTasksManager.addSubtask(new Subtask("Чемодан", "вынести в коридор", 3));
