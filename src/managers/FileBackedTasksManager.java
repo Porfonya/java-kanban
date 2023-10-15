@@ -17,10 +17,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     private final File file;
     List<Task> taskHistory = super.getHistory();
 
-    public FileBackedTasksManager(File file) {
+    public FileBackedTasksManager(String path) {
 
-        this.file = file;
+        this.file = new File(path);
     }
+
 
     @Override
     public Map<Integer, Task> getTasks() {
@@ -207,7 +208,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     public static FileBackedTasksManager loadFromFile(File file) {
-        FileBackedTasksManager manager = new FileBackedTasksManager(file);
+        FileBackedTasksManager manager = new FileBackedTasksManager(file.getPath());
         try {
             Reader fileReader = new FileReader(file);
             BufferedReader br = new BufferedReader(fileReader);
@@ -263,7 +264,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         System.out.println("Новый таскменеджер");
         File file = new File("./resources", "FileBackupTasks.csv");
 
-        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
+        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file.getPath());
         Task task = new Task("Работа", "Заработать 1000 рублей");
         task.setDuration(10);
         task.setStartTime(LocalDateTime.now());

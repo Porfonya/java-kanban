@@ -1,3 +1,4 @@
+package tasksTests;
 
 import managers.*;
 
@@ -75,9 +76,9 @@ class InMemoryHistoryManagerTest {
     @Test
     public void deleteMiddleHistoryTask() {
         int middleValue = Math.round(taskManager.getHistory().size() - 1) / 2;
-        int historyMidleTask = taskManager.getHistory().get(middleValue).getId();
+        int historyMiddleTask = taskManager.getHistory().get(middleValue).getId();
         taskManager.removeByIdTask(2);
-        assertNotEquals(historyMidleTask, taskManager.getHistory().get(middleValue).getId());
+        assertNotEquals(historyMiddleTask, taskManager.getHistory().get(middleValue).getId());
     }
 
 }

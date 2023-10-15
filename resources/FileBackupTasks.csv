@@ -1,1 +1,8 @@
 id,type,name,status,description,duration,startTime,epic
+1,TASK,Работа,NEW,Заработать 1000 рублей,2023-10-15T03:09:29.669294700,10
+2,EPIC,Подъем,NEW,Поднять все вещи,null,0
+3,EPIC,Переезд,NEW,Перевезти все вещи в новую квартиру,null,0
+4,SUBTASK,Собрать вещи,NEW,аккурасно сложить в чемодан,null,0,3
+5,SUBTASK,Чемодан,NEW,вынести в коридор,null,0,3
+6,SUBTASK,Лифт,NEW,вызвать лифт,null,0,3
+
