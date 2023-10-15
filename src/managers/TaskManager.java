@@ -15,11 +15,11 @@ public interface TaskManager {
 
     Map<Integer, Epic> getEpics();
 
-    Task getTask(int taskId);
+    Task getTask(int taskId) throws InterruptedException;
 
-    Epic getEpic(int epicId);
+    Epic getEpic(int epicId) throws InterruptedException;
 
-    Subtask getSubtask(int subtaskId);
+    Subtask getSubtask(int subtaskId) throws InterruptedException;
 
     void clearAllTask();
 
@@ -27,11 +27,11 @@ public interface TaskManager {
 
     void clearAllSubtask();
 
-    void addTask(Task task);
+    void addTask(Task task) throws InterruptedException;
 
-    void addEpic(Epic epic);
+    void addEpic(Epic epic) throws InterruptedException;
 
-    void addSubtask(Subtask subtask);
+    void addSubtask(Subtask subtask) throws InterruptedException;
 
     void removeByIdTask(int id);
 

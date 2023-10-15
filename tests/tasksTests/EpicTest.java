@@ -20,7 +20,7 @@ class EpicTest {
     Epic epic;
 
     @BeforeEach
-    public void beforeEach(TestInfo info) {
+    public void beforeEach(TestInfo info) throws InterruptedException {
         epic = new Epic("Test addNewEpic1", "Test addNewEPic description1");
         inMemoryTaskManager.addEpic(epic);
         if (info.getDisplayName().equals("shouldBeEmpty()")) {

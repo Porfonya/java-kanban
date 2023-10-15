@@ -36,7 +36,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    void testAddTask() throws ManagerSaveException {
+    void testAddTask() throws ManagerSaveException, InterruptedException {
 
         Assertions.assertEquals(0, taskManager.getTasks().size(), "Список задач не пуст");
         Task task = new Task("Test addNewTask", "Test addNewTask description");
@@ -54,7 +54,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    void testAddEpic() {
+    void testAddEpic() throws InterruptedException {
         Epic epic1 = new Epic("EpicOne", "Поднять все вещи еще раз");
 
         Epic epic2 = new Epic("Подъем", "Поднять все вещи");
@@ -67,7 +67,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    void testAddSubtask() throws ManagerSaveException {
+    void testAddSubtask() throws ManagerSaveException, InterruptedException {
 
 
         Epic epic = new Epic(7, "EpicOne", "Поднять все вещи еще раз", Status.NEW, TaskType.EPIC);
@@ -112,7 +112,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    void testRemoveByIdTask() {
+    void testRemoveByIdTask() throws InterruptedException {
         Task task = new Task("Test addNewTask", "Test addNewTask description");
         assertEquals(0, taskManager.getTasks().size(), "Список задач не пустой");
         taskManager.addTask(task);
@@ -138,7 +138,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
 
 
     @Test
-    void testUpdateTask() {
+    void testUpdateTask() throws InterruptedException {
         Task task = new Task("Test addNewTask", "Test addNewTask description");
         task.setDuration(10);
         task.setStartTime(LocalDateTime.now().plusMinutes(5));
@@ -152,7 +152,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    void testUpdateSubtask() {
+    void testUpdateSubtask() throws InterruptedException {
         Epic epic = new Epic(7, "EpicOne", "Поднять все вещи еще раз", Status.NEW, TaskType.EPIC);
         Subtask subtask1 = new Subtask("222", "22222", 7);
         subtask1.setDuration(10);
@@ -170,7 +170,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    void testUpdateEpic() {
+    void testUpdateEpic() throws InterruptedException {
         Epic epic = new Epic(7, "EpicOne", "Поднять все вещи еще раз", Status.NEW, TaskType.EPIC);
         taskManager.addEpic(epic);
         Epic update = taskManager.getEpic(epic.getId());

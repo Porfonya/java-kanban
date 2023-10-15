@@ -32,7 +32,7 @@ public class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksM
     }
 
     @Test
-    public void shouldBeEpicWithoutSubtask() throws ManagerSaveException {
+    public void shouldBeEpicWithoutSubtask() throws ManagerSaveException, InterruptedException {
         fileBackedTasksManager.clearAllEpic();
         FileBackedTasksManager fileBackedTasksManager1 = FileBackedTasksManager.loadFromFile(file);
 

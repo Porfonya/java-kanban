@@ -17,7 +17,7 @@ class InMemoryHistoryManagerTest {
     private final InMemoryTaskManager taskManager = new InMemoryTaskManager();
 
     @BeforeEach
-    public void beforeEach(TestInfo info) {
+    public void beforeEach(TestInfo info) throws InterruptedException {
 
         if (info.getDisplayName().equals("shouldBeEmpty()")) {
             return;
@@ -35,7 +35,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void shouldBeEmpty() {
+    public void shouldBeEmpty() throws InterruptedException {
         Task task = new Task("newTask", "NewDescription");
         taskManager.addTask(task);
         taskManager.getTask(task.getId());

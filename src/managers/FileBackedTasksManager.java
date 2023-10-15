@@ -42,21 +42,21 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public Task getTask(int taskId) {
+    public Task getTask(int taskId) throws InterruptedException {
         Task task = super.getTask(taskId);
         save();
         return task;
     }
 
     @Override
-    public Epic getEpic(int epicId) {
+    public Epic getEpic(int epicId) throws InterruptedException {
         Epic epic = super.getEpic(epicId);
         save();
         return epic;
     }
 
     @Override
-    public Subtask getSubtask(int subtaskId) {
+    public Subtask getSubtask(int subtaskId) throws InterruptedException {
         Subtask subtask = super.getSubtask(subtaskId);
         save();
         return subtask;
@@ -81,19 +81,19 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void addTask(Task task) {
+    public void addTask(Task task) throws InterruptedException {
         super.addTask(task);
         save();
     }
 
     @Override
-    public void addEpic(Epic epic) {
+    public void addEpic(Epic epic) throws InterruptedException {
         super.addEpic(epic);
         save();
     }
 
     @Override
-    public void addSubtask(Subtask subtask) {
+    public void addSubtask(Subtask subtask) throws InterruptedException {
         super.addSubtask(subtask);
         save();
     }
@@ -258,7 +258,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
 
         System.out.println("Новый таскменеджер");
@@ -289,6 +289,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         fileBackedTasksManager.getTask(1);
 
         System.out.println(fileBackedTasksManager.getSubtask(3));
+        System.out.println("Все таски" + fileBackedTasksManager.getTasks());
 
     }
 }

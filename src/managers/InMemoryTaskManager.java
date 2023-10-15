@@ -40,7 +40,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task getTask(int taskId) {
+    public Task getTask(int taskId) throws InterruptedException {
         // Получение по идентификатору.
         Task task = null;
         if (tasks.containsKey(taskId)) {
@@ -52,7 +52,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Epic getEpic(int epicId) {
+    public Epic getEpic(int epicId) throws InterruptedException {
         // Получение по идентификатору.
         Epic epic = null;
         if (epics.containsKey(epicId)) {
@@ -63,7 +63,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Subtask getSubtask(int subtaskId) {
+    public Subtask getSubtask(int subtaskId) throws InterruptedException {
         // Получение по идентификатору.
         Subtask subtask = null;
         if (subtasks.containsKey(subtaskId)) {
@@ -96,7 +96,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void addTask(Task task) throws ManagerSaveException {
+    public void addTask(Task task) throws ManagerSaveException, InterruptedException {
 
         if (task.getId() == 0) {
             task.setId(elementId);
@@ -113,7 +113,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void addEpic(Epic epic) throws ManagerSaveException {
+    public void addEpic(Epic epic) throws ManagerSaveException, InterruptedException {
         if (epic.getId() == 0) {
             epic.setId(elementId);
             elementId++;
@@ -122,7 +122,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void addSubtask(Subtask subtask) throws ManagerSaveException {
+    public void addSubtask(Subtask subtask) throws ManagerSaveException, InterruptedException {
         if (epics.containsKey(subtask.getEpicId())) {
             if (subtask.getId() == 0) {
                 subtask.setId(elementId);
